@@ -1,1 +1,3 @@
 # EL
+##REQUIREMENTS
+*Oracle Java
