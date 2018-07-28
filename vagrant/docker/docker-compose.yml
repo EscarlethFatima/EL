@@ -7,5 +7,3 @@ services:
       - "5000:5000"
     volumes:
       - ./jenkins:/var/jenkins_home
- 
- 
