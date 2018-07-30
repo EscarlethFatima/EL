@@ -8,7 +8,7 @@ public class Person {
 
     public Person(String name) {
         this.name = name;
-	this.age = 10;
+        this.age = 10;
         new GrowthList();
     }
 
