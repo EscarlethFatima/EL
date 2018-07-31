@@ -1,3 +1,3 @@
 # EL
-##REQUIREMENTS
-*Oracle Java
+## REQUIREMENTS
+* Oracle Java 9
