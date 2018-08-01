@@ -12,7 +12,7 @@ pipeline {
             }
 	    post {
         	success {
-           	  archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
+           	  archiveArtifacts artifacts: '**/*.jar', fingerprint: true
         	}
    	    }
         }
@@ -23,7 +23,7 @@ pipeline {
             }
 	    post {
         	always {
-           	   junit 'build/reports/**/*.html'
+           	   junit 'quickstart/build/test-results/test/*.xml'
         	}
    	    }
         }
