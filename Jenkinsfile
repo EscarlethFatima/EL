@@ -12,18 +12,25 @@ pipeline {
             }
 	    post {
         	success {
-           	  archiveArtifacts artifacts: '**/*.jar', fingerprint: true
+           	  archiveArtifacts artifacts: 'quickstart/build/libs/*.jar', fingerprint: true
         	}
    	    }
         }
         stage('Test') {
             steps {
                 echo 'Testing...'
-	        sh './quickstart/gradlew clean test -p quickstart/'
+	        sh './quickstart/gradlew clean test jacocoTestReport -p quickstart/'
             }
 	    post {
         	always {
            	   junit 'quickstart/build/test-results/test/*.xml'
+		   publishHTML([allowMissing: true,
+                       alwaysLinkToLastBuild: false,
+                       keepAll: true,
+                       reportDir: 'quickstart/build/reports/tests/test',
+                       reportFiles: 'index.html',
+                       reportTitles: "Test Report",
+                       reportName: 'Junit Report'])
         	}
    	    }
         }
