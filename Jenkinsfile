@@ -31,13 +31,19 @@ pipeline {
                        reportFiles: 'index.html',
                        reportTitles: "Test Report",
                        reportName: 'Junit Report'])
+		  publishHTML([allowMissing: true,
+                       alwaysLinkToLastBuild: false,
+                       keepAll: true,
+                       reportDir: 'quickstart\build\reports\jacoco\test\html',
+                       reportFiles: 'index.html',
+                       reportTitles: "Jacoco Report",
+                       reportName: 'Jacoco CodeCoverage Report'])
         	}
    	    }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying...'
-		sh './quickstart/gradlew clean build -p quickstart/'
             }
         }
     }
