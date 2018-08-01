@@ -34,7 +34,7 @@ pipeline {
 		  publishHTML([allowMissing: true,
                        alwaysLinkToLastBuild: false,
                        keepAll: true,
-                       reportDir: 'quickstart\build\reports\jacoco\test\html',
+                       reportDir: 'quickstart/build/reports/jacoco/test/html',
                        reportFiles: 'index.html',
                        reportTitles: "Jacoco Report",
                        reportName: 'Jacoco CodeCoverage Report'])
