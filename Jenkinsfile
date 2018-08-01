@@ -5,23 +5,21 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-		sh './quickstart/gradlew clean assemble -p quickstart/'
+	        sh '''
+		chmod +x quickstart/gradlew
+		./quickstart/gradlew clean assemble -p quickstart/
+		'''
             }
         }
         stage('Test') {
             steps {
                 echo 'Testing..'
-		sh './quickstart/gradlew clean test -p quickstart/'
+	        sh './quickstart/gradlew clean test -p quickstart/'
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-		sh '''
-		cd quickstart/
-		chmod +x gradlew
-		./gradlew clean build
-		'''
             }
         }
     }
