@@ -39,7 +39,7 @@ pipelines:
                     source: quickstart/build/reports/tests/test/**/*
                     destination: html
                 - test:
-                    source: quickstart/build/test-results/test/*xml
+                    source: quickstart/build/test-results/test/*.xml
                     destination: xml
               tabs:
                 unit_test: html/index.html
