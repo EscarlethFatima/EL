@@ -13,22 +13,22 @@ pipelines:
             building: 
               tasks:
                 - exec:
-                    command: ./gradle/quickstart/gradlew
+                    command: ./quickstart/gradlew
                     arguments:
                       - "clean"
                       - "assemble"
                       - "-p"
-                      - "gradle/quickstart/"
+                      - "quickstart/"
               artifacts:
                 - build:
-                    source: gradle/quickstart/build/libs/*.jar
+                    source: quickstart/build/libs/*.jar
                     destination: Build
       - Test:
           jobs:
             Unit_Test: 
               tasks:
                 - exec:
-                    command: ./gradle/quickstart/gradlew
+                    command: ./quickstart/gradlew
                     arguments:
                       - clean
                       - test
@@ -36,10 +36,10 @@ pipelines:
                       - quickstart
               artifacts:
                 - build:
-                    source: gradle/quickstart/build/reports/tests/test/**/*
+                    source: quickstart/build/reports/tests/test/**/*
                     destination: html
                 - test:
-                    source: gradle/quickstart/build/test-results/test/*xml
+                    source: quickstart/build/test-results/test/*xml
                     destination: xml
               tabs:
                 unit_test: html/index.html
