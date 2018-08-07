@@ -44,4 +44,13 @@ pipelines:
                     destination: xml
               tabs:
                 unit_test: html/index.html
-                
+      - CodeQuality:
+          jobs:
+            code-quality:
+              tasks:
+                - exec:
+                    command: ./quickstart/gradlew
+                    arguments:
+                      - sonarqube
+                      - -p
+                      - quickstart             
