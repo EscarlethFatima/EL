@@ -41,5 +41,11 @@ pipeline {
         	}
    	    }
         }
+	stage('CodeQuality'){
+	    steps{
+		echo 'Code quality...'
+		sh './quickstart/gradlew sonarqube -p quickstart/'
+	    }	
+	}
     }
 }
