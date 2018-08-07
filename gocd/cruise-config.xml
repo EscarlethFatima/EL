@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <cruise xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="cruise-config.xsd" schemaVersion="108">
   <server artifactsdir="artifacts" agentAutoRegisterKey="849dc48d-9e4e-4167-a273-f4607ea8dfd3" webhookSecret="ebffbcab-92fb-4f15-a0f9-2eca893dce44" commandRepositoryLocation="default" serverId="f125bfa6-6e7f-4a39-ac33-62c92157561c" tokenGenerationKey="f0dc0bd6-38cf-470c-9b8f-a0dbf704ac06" />
+  <config-repos>
+    <config-repo pluginId="yaml.config.plugin" id="repo1">
+      <git url="https://github.com/devops-at06/EL.git" />
+    </config-repo>
+  </config-repos>
   <pipelines group="Quickstart">
     <pipeline name="Quickstart">
       <materials>
@@ -42,8 +47,21 @@
           </job>
         </jobs>
       </stage>
+      <stage name="CodeQuality">
+        <jobs>
+          <job name="code-quality">
+            <tasks>
+              <exec command="sh" workingdir="quickstart/">
+                <arg>./gradlew</arg>
+                <arg>sonarqube</arg>
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
     </pipeline>
   </pipelines>
+  <pipelines group="TEST" />
   <agents>
     <agent hostname="18b887870b6b" ipaddress="172.19.0.3" uuid="8e953c67-73aa-4614-907d-e31e64f2eaf8">
       <resources>
