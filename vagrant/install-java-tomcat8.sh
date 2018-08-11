@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo apt-get update
-sudo apt-get -y install apache2 openjdk-8-jdk
+sudo apt-get install openjdk-8-jdk
 sudo apt-get install unzip
 cd /opt
 curl -O http://apache.mirrors.ionfish.org/tomcat/tomcat-8/v8.5.32/bin/apache-tomcat-8.5.32.zip 
