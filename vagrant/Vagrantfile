@@ -22,7 +22,7 @@ Vagrant.configure('2') do |config|
       os.tenant_name = ENV['OS_TENANT_DESK_NAME']
       os.project_name = ENV['OS_PROJECT_DESK_NAME']
       os.flavor = ENV['OS_FLAVOR_DESK_NAME']
-	  os.server_name = 'devops'
+      os.server_name = 'devops'
       override.vm.synced_folder '.', '/vagrant', disabled: true
     end
   end
@@ -33,7 +33,7 @@ Vagrant.configure('2') do |config|
       os.tenant_name = ENV['OS_TENANT_LAB_NAME']
       os.project_name = ENV['OS_PROJECT_LAB_NAME']
       os.flavor = ENV['OS_FLAVOR_LAB_NAME']
-	  os.server_name = 'devops-deploy'
+      os.server_name = 'devops-deploy'
       override.vm.synced_folder '.', '/vagrant', disabled: true
     end
   end
