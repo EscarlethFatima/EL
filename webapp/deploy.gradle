@@ -1,0 +1,22 @@
+plugins {
+  id 'org.hidetake.ssh' version '2.9.0'
+}
+
+remotes {
+  webServer {
+    host = '10.28.135.216'
+    user = 'ubuntu'
+    identity = file('C:\\ESCARLETH\\key\\devops.pem')
+  }
+}
+
+task deploy {
+  doLast {
+    ssh.run {
+      session(remotes.webServer) {
+        put from: 'build/libs/quickstart.war', into: '/opt/tomcat/webapps'
+        execute 'sudo systemctl restart tomcat'
+      }
+    }
+  }
+}
