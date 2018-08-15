@@ -15,7 +15,7 @@ task deploy {
     ssh.run {
       session(remotes.webServer) {
           put from: "${war_path}/${war_name}.war", into: "/tmp/${war_name}.war"
-          executeScript file('webapp/deploy-app.sh')
+          executeScript file('deploy-app.sh')
       }
     }
   }
