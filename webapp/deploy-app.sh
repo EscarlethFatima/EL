@@ -1,12 +1,12 @@
 echo 'Stopping Tomcat service...'
-echo "${tomcat_webapps}/${war_name}.war"
+
 sudo systemctl stop tomcat
-sudo rm -f ${tomcat_webapps}/${war_name}.war
-sudo rm -rf ${tomcat_webapps}/${war_name}
+sudo rm -f /opt/tomcat/webapps/webapp.war
+sudo rm -rf /opt/tomcat/webapps/webapp
 
 echo 'Moving war file...'
-sudo cp -f /tmp/${war_name}.war ${tomcat_webapps}/${war_name}.war
-sudo rm /tmp/${war_name}.war
+sudo cp -f /tmp/webapp.war /opt/tomcat/webapp.war
+sudo rm /tmp/webapp.war
 
 echo 'Starting Tomcat service...'
 sudo systemctl start tomcat
