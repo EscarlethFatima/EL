@@ -5,43 +5,43 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building...'
-	            sh './gradlew clean assemble'
+	            sh './webapp/gradlew clean assemble -p webapp/'
             }
-	    post {
-        	success {
-           	  archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
-        	}
-   	    }
+	        post {
+        	    success {
+           	        archiveArtifacts artifacts: 'webapp/build/libs/*.jar', fingerprint: true
+        	    }
+   	         }
         }
         stage('Test') {
             steps {
                 echo 'Testing...'
-	            sh './gradlew clean test jacocoTestReport '
+	            sh './webapp/gradlew clean test jacocoTestReport -p webapp/'
             }
-	    post {
-        	always {
-           	   junit 'build/test-results/test/*.xml'
-		   publishHTML([allowMissing: true,
-                       alwaysLinkToLastBuild: false,
-                       keepAll: true,
-                       reportDir: 'build/reports/tests/test',
-                       reportFiles: 'index.html',
-                       reportTitles: "Test Report",
-                       reportName: 'Junit Report'])
-		  publishHTML([allowMissing: true,
-                       alwaysLinkToLastBuild: false,
-                       keepAll: true,
-                       reportDir: 'build/reports/jacoco/test/html',
-                       reportFiles: 'index.html',
-                       reportTitles: "Jacoco Report",
-                       reportName: 'Jacoco CodeCoverage Report'])
-        	}
-   	    }
+	         post {
+        	    always {
+           	        junit 'quickstart/build/test-results/test/*.xml'
+		            publishHTML([allowMissing: true,
+                                alwaysLinkToLastBuild: false,
+                                keepAll: true,
+                                reportDir: 'webapp/build/reports/tests/test',
+                                reportFiles: 'index.html',
+                                reportTitles: "Test Report",
+                                reportName: 'Junit Report'])
+		            publishHTML([allowMissing: true,
+                                alwaysLinkToLastBuild: false,
+                                keepAll: true,
+                                reportDir: 'webapp/build/reports/jacoco/test/html',
+                                reportFiles: 'index.html',
+                                reportTitles: "Jacoco Report",
+                                reportName: 'Jacoco CodeCoverage Report'])
+        	    }
+   	         }
         }
 	    stage('CodeQuality'){
 	        steps{
 		        echo 'Code quality...'
-		        sh './gradlew sonarqube'
+		        sh './webapp/gradlew sonarqube -p webapp/'
 	        }
 	    }
     }
