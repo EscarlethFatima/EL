@@ -3,7 +3,7 @@ format_version: 3
 pipelines:
   quickstart-ci:
     lock_behavior: lockOnFailure
-    group: TEST
+    group: Quickstart
     materials:
       repo: 
        git: https://github.com/devops-at06/EL.git
@@ -53,4 +53,45 @@ pipelines:
                     arguments:
                       - sonarqube
                       - -p
-                      - quickstart             
+                      - quickstart 
+  el-web-application:
+    lock_behavior: lockOnFailure
+    group: WebApplication
+    materials:
+      repo:
+        git: https://github.com/devops-at06/EL.git
+        branch: master
+    stages:
+      - Build:
+          jobs:
+            building:
+              tasks:
+                - exec:
+                    command: ./webapp/gradlew
+                    arguments:
+                      - "clean"
+                      - "assemble"
+                      - "-p"
+                      - "webapp/"
+              artifacts:
+                - build:
+                    source: webapp/build/libs/*.war
+                    destination: war/                   
+      - Deploy:
+          jobs:
+            Application:
+              tasks:
+                - fetch:
+                    stage: Build
+                    job: building
+                    source: war/
+                - exec:
+                    command: ./webapp/gradlew
+                    arguments:
+                      - -b
+                      - deploy.gradle
+                      - deploy
+                      - -Pdev_server=10.28.135.216
+                      - -Pwar_path=war
+                      - -p
+                      - webapp/ 

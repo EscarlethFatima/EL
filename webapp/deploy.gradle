@@ -4,9 +4,9 @@ plugins {
 
 remotes {
   webServer {
-    host = '10.28.135.216'
-    user = 'ubuntu'
-    identity = file(System.properties['key.path'])
+    host = "${dev_server}"
+    user = "${user_server}"
+    identity = file("${key_path}")
   }
 }
 
@@ -15,7 +15,7 @@ task deploy {
     ssh.run {
       session(remotes.webServer) {
         execute 'echo Stopping Tomcat service...'
-        execute 'sudo systemctl stop tomcat8'
+        execute 'sudo systemctl stop tomcat'
         execute "sudo rm -f ${tomcat_webapps}/${war_name}.war", ignoreError: true
         execute "sudo rm -rf ${tomcat_webapps}/${war_name}", ignoreError: true
 
@@ -25,7 +25,7 @@ task deploy {
         remove "/tmp/${war_name}.war"
 
         execute 'echo Starting Tomcat service...'
-        execute 'sudo systemctl start tomcat8'
+        execute 'sudo systemctl start tomcat'
       }
     }
   }
