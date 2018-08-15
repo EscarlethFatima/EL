@@ -5,8 +5,8 @@ pipelines:
     group: Quickstart
     materials:
       repo: 
-       git: https://github.com/EscarlethFatima/EL.git
-       branch: task13
+       git: https://github.com/devops-at06/EL.git
+       branch: master
     stages: 
       - Build:
           jobs:
@@ -58,8 +58,8 @@ pipelines:
     group: WebApplication
     materials:
       repo:
-        git: https://github.com/devops-at06/EL.git
-        branch: master
+        git: https://github.com/EscarlethFatima/EL.git
+        branch: task13
     stages:
       - Build:
           jobs:
