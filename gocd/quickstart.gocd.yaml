@@ -112,7 +112,6 @@ pipelines:
                       - deploy
                       - -Pdev_server=10.28.135.216
                       - -Pwar_path=war
-                      - -Ptomcat_webapps=/opt/tomcat/webapps
                       - -Pwar_name=webapp
                       - -p
                       - webapp/ 
