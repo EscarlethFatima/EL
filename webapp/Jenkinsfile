@@ -20,7 +20,7 @@ pipeline {
             }
 	         post {
         	    always {
-           	        junit 'quickstart/build/test-results/test/*.xml'
+           	        junit 'webapp/build/test-results/test/*.xml'
 		            publishHTML([allowMissing: true,
                                 alwaysLinkToLastBuild: false,
                                 keepAll: true,
@@ -42,6 +42,11 @@ pipeline {
 	        steps{
 		        echo 'Code quality...'
 		        sh './webapp/gradlew sonarqube -p webapp/'
+	        }
+	    }
+	    stage('Deploy'){
+	        steps{
+	            sh './webapp/gradlew -b deploy.gradle deploy -Pdev_server=10.28.135.216 -Pwar_path=war -Pwar_name=webapp -p webapp/'
 	        }
 	    }
     }
