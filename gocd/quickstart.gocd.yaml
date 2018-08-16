@@ -111,6 +111,7 @@ pipelines:
                       - deploy.gradle
                       - deploy
                       - -Pdev_server=10.28.135.216
+                      - -Pkey_path=/home/go/devops.pem
                       - -Pwar_path=war
                       - -Pwar_name=webapp
                       - -p
