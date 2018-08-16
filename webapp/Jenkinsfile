@@ -1,0 +1,54 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+	            sh './webapp/gradlew clean assemble -p webapp/'
+            }
+	        post {
+        	    success {
+           	        archiveArtifacts artifacts: 'webapp/build/libs/*.war', fingerprint: true
+           	        stash includes: 'webapp/build/libs/*.war', name: 'war'
+        	    }
+   	         }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+	            sh './webapp/gradlew clean test jacocoTestReport -p webapp/'
+            }
+	         post {
+        	    always {
+           	        junit 'webapp/build/test-results/test/*.xml'
+		            publishHTML([allowMissing: true,
+                                alwaysLinkToLastBuild: false,
+                                keepAll: true,
+                                reportDir: 'webapp/build/reports/tests/test',
+                                reportFiles: 'index.html',
+                                reportTitles: "Test Report",
+                                reportName: 'Junit Report'])
+		            publishHTML([allowMissing: true,
+                                alwaysLinkToLastBuild: false,
+                                keepAll: true,
+                                reportDir: 'webapp/build/reports/jacoco/test/html',
+                                reportFiles: 'index.html',
+                                reportTitles: "Jacoco Report",
+                                reportName: 'Jacoco CodeCoverage Report'])
+        	    }
+   	         }
+        }
+	    stage('CodeQuality'){
+	        steps{
+		        echo 'Code quality...'
+		        sh './webapp/gradlew sonarqube -p webapp/'
+	        }
+	    }
+	    stage('Deploy'){
+	        steps{
+	              sh './webapp/gradlew -b deploy.gradle deploy -Pdev_server=10.28.135.216 -Pkey_path=/home/devops.pem -Pwar_path=war -Pwar_name=webapp -p webapp/'
+	        }
+	    }
+    }
+}

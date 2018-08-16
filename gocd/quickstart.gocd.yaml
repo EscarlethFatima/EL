@@ -1,4 +1,3 @@
-#quickstart.gocd.yaml
 format_version: 3
 pipelines:
   quickstart-ci:
@@ -59,8 +58,8 @@ pipelines:
     group: WebApplication
     materials:
       repo:
-        git: https://github.com/devops-at06/EL.git
-        branch: master
+        git: https://github.com/EscarlethFatima/EL.git
+        branch: task13
     stages:
       - Build:
           jobs:
@@ -76,7 +75,27 @@ pipelines:
               artifacts:
                 - build:
                     source: webapp/build/libs/*.war
-                    destination: war/                   
+                    destination: war/
+      - Test:
+          jobs:
+            Unit_Test:
+              tasks:
+                - exec:
+                    command: ./webapp/gradlew
+                    arguments:
+                      - clean
+                      - test
+                      - -p
+                      - webapp/
+              artifacts:
+                - build:
+                    source: webapp/build/reports/tests/test/**/*
+                    destination: html
+                - test:
+                    source: webapp/build/test-results/test/*.xml
+                    destination: xml
+              tabs:
+                unit_test: html/index.html
       - Deploy:
           jobs:
             Application:
@@ -92,7 +111,8 @@ pipelines:
                       - deploy.gradle
                       - deploy
                       - -Pdev_server=10.28.135.216
+                      - -Pkey_path=/home/go/devops.pem
                       - -Pwar_path=war
+                      - -Pwar_name=webapp
                       - -p
                       - webapp/ 
-      
