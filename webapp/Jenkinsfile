@@ -10,6 +10,7 @@ pipeline {
 	        post {
         	    success {
            	        archiveArtifacts artifacts: 'webapp/build/libs/*.war', fingerprint: true
+           	        stash includes: 'webapp/build/libs/*.war', name: 'war'
         	    }
    	         }
         }
@@ -46,10 +47,6 @@ pipeline {
 	    }
 	    stage('Deploy'){
 	        steps{
-	              copyArtifacts('Build') {
-                            includePatterns('*.war')
-                            targetDirectory('war')
-                   }
 	              sh './webapp/gradlew -b deploy.gradle deploy -Pdev_server=10.28.135.216 -Pkey_path=/home/devops.pem -Pwar_path=war -Pwar_name=webapp -p webapp/'
 	        }
 	    }
