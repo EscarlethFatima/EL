@@ -9,7 +9,7 @@ pipeline {
             }
 	        post {
         	    success {
-           	        archiveArtifacts artifacts: 'webapp/build/libs/*.jar', fingerprint: true
+           	        archiveArtifacts artifacts: 'webapp/build/libs/*.war', fingerprint: true
         	    }
    	         }
         }
